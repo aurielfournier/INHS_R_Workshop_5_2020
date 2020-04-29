@@ -1,6 +1,6 @@
 ### -- ggplot2 section
 ### -- By - Auriel Fournier
-### -- https://github.com/aurielfournier/GERS2018
+### -- https://github.com/aurielfournier/INHS_R_Workshop_5_2020/
 
 # use install.packages() if you don't have these already
 library(dplyr)
@@ -9,10 +9,10 @@ library(ggthemes)
 library(RColorBrewer)
 library(cowplot)
 
-a_states <- c("AR","AZ","AK","AL")
+i_states <- c("IL","ID","IA","IN")
 
-abird <- read.csv("eBird_workshop.csv") %>%
-            filter(state %in% a_states)
+ibird <- read.csv("eBird_workshop.csv") %>%
+            filter(state %in% i_states)
 
 # ggplot2 is built on the grammar of graphics, the idea that any plot can be expressed from the same set of components: 
 
@@ -23,7 +23,7 @@ abird <- read.csv("eBird_workshop.csv") %>%
 # The key to understanding ggplot2 is thinking about a figure in layers. This idea may be familiar to you if you have used image editing programs like Photoshop, Illustrator, or Inkscape.
 # Let's start off with an example:
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = presence, y = samplesize))
 
 # this gives us a plot, with no data on it, but for a good reason. 
@@ -33,7 +33,7 @@ ggplot(data = abird,
 # so it gives us the blank canvas
 # so lets add a layer
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = presence, y = samplesize)) +
   geom_point()
 
@@ -56,7 +56,7 @@ ggplot(data = abird,
 
 # What do we need to change to look at how sample size changes over time?  
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = year, y = samplesize)) + 
   geom_point()
 
@@ -70,7 +70,7 @@ ggplot(data = abird,
 # code from the previous challenge to **color** the points by the "continent"
 # column. What trends do you see in the data? Are they what you expected?
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = year, y = samplesize,
            color=state)) + 
   geom_point()
@@ -84,7 +84,7 @@ ggplot(data = abird,
 #Using a scatterplot probably isn't the best for visualising change over time.
 #Instead, let's tell `ggplot` to visualise the data as a line plot:
   
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x=year, y=samplesize)) +
   geom_line()
 
@@ -95,7 +95,7 @@ ggplot(data = abird,
 # if we add the **by** *aesthetic*, we will be able to say do each line
 # by country, and see a different chart
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x=year, y=samplesize,
            color=state)) +
   geom_line()
@@ -103,7 +103,7 @@ ggplot(data = abird,
 # But what if we want to visualise both lines and points on the plot? 
 # We can simply add another layer to the plot:
   
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x=year, y=samplesize,
            color=state)) +
   geom_line() + 
@@ -113,7 +113,7 @@ ggplot(data = abird,
 #this example, the points have been drawn *on top of* the lines. Here's a
 #demonstration:
   
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x=year, y=samplesize)) +
   geom_line(aes(color=state)) + 
   geom_point()
@@ -130,7 +130,7 @@ ggplot(data = abird,
 #  ggplot also makes it easy to overlay statistical models over the data. To
 # demonstrate we'll go back to our first example:
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = presence, 
            y = samplesize, 
            color=state)) +
@@ -143,7 +143,7 @@ ggplot(data = abird,
 # points, using the *alpha* funtion, which is especially helpful when you have
 # a large amount of data which is very clustered.
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = presence, 
            y = samplesize, 
            color=state)) +
@@ -160,7 +160,7 @@ ggplot(data = abird,
 # We can fit a simple relationship to the data by adding another layer,
 #`geom_smooth`:
   
-ggplot(data = abird, 
+ggplot(data = ibird, 
   aes(x = presence, y = samplesize)) +
   geom_point(alpha=0.5)+
   geom_smooth(method="lm", aes(color=state))
@@ -168,7 +168,7 @@ ggplot(data = abird,
 # We can make the line thicker by *setting* the **size** aesthetic in the
 # `geom_smooth` layer:
   
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = presence, y = samplesize)) +
   geom_point(alpha=0.5)+
   geom_smooth(method="lm", aes(color=state), size=2)
@@ -183,14 +183,14 @@ ggplot(data = abird,
 # Make a point graph of sample size by presence where all the points are red. 
 #
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = samplesize, y = presence)) +
   geom_point(color="red", size=2) 
 ## Challenge 4b 
 #
 # Modify your solution  that the points are now a different shape and are colored by state.
 
-ggplot(data = abird, 
+ggplot(data = ibird, 
        aes(x = samplesize, y = presence)) +
   geom_point(size=2, aes(shape=state, color=state)) 
 
@@ -205,7 +205,7 @@ ggplot(data = abird,
 # by adding a layer of **facet** panels. Focusing only on those countries with
 # names that start with the letter "A" or "Z".
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x = year, 
            y = samplesize, 
            group=state, color=state)) +
@@ -227,7 +227,7 @@ ggplot(data=abird,
 # for changing the axis labels. To change the legend title, we need to use the
 # **scale** layer.
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x = year, 
            y = samplesize, 
            group=state, color=state)) +
@@ -256,7 +256,7 @@ ggplot(data=abird,
 # OR you can use some pre made themes
 # https://github.com/jrnold/ggthemes
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x = year, 
            y = samplesize, 
            group=state, color=state)) +
@@ -264,7 +264,7 @@ ggplot(data=abird,
   facet_wrap(~state, ncol=2)+
   theme_economist()
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x = year, 
            y = samplesize, 
            group=state, color=state)) +
@@ -272,7 +272,7 @@ ggplot(data=abird,
   facet_wrap(~state, ncol=2)+
   theme_gdocs()
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x = year, 
            y = samplesize, 
            group=state, color=state)) +
@@ -287,7 +287,7 @@ ggplot(data=abird,
 # look at the graph below, its pretty visually assualting
 # figure out how to fix it
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x = year, 
            y = samplesize, 
            group=state, color=state)) +
@@ -321,7 +321,7 @@ display.brewer.all(n=NULL, type="all", select=NULL, exact.n=TRUE,colorblindFrien
   
 mypalette<-brewer.pal(4,"Greens")
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x=state, 
           y=samplesize, 
            fill=state)) + 
@@ -335,7 +335,7 @@ mypalette<-brewer.pal(4,"Set2")
 
 mypalette[2] <- "#000000"
 
-ggplot(data=abird, 
+ggplot(data=ibird, 
        aes(x=state, 
            y=samplesize, 
            fill=state)) + 
@@ -350,12 +350,12 @@ ggplot(data=abird,
 ## Saving, Stacking and Rearranging Graphs 
 ###################################
 
-(one <-   ggplot(data=abird, 
+(one <-   ggplot(data=ibird, 
                aes(x=year, y=samplesize, group=state)) + 
   geom_line()+
         theme(axis.text.x=element_text(ang=90)))
 
-(two <- ggplot(data=abird, 
+(two <- ggplot(data=ibird, 
              aes(x=samplesize, y=presence)) + 
     geom_point())
 
