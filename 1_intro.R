@@ -51,7 +51,7 @@ a <- 100
 
 ## With pipes
 ebird %>%
-  filter(state=='AK',
+  filter(state=='IL',
          year==2008) %>% 
         select(state, samplesize, presence)
 
